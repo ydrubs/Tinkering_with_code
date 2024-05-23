@@ -5,7 +5,7 @@ Generate an nxm grid using Turtle Graphics.The following data can be retrieved f
         1. The boundaries of each cell in terms of Turtles coordinates: cell_left,cell_right, cell_upper, cell_lower
         2 . The (row, column) index of each cell starting with (1,1)
         3. A single integer reference for each cell starting with 1 and counting across the row.
-  - get_cell_boundaries_single - Accepts a zero-referenced (0,0) row and column parameter and returns the boundaries of the cell as described in 1. above
+  - get_cell_boundaries_single - Accepts a one-referenced (1,1) row and column parameter and returns the boundaries of the cell as described in 1. above
   - get_neighbors - Accepts a zero-referenced (0,0) row and column parameter and returns a list of the (row, column) coordinates of all the neighbors (up, down, left right)
     ...also returns the direction of each neighbor relative to the row,column in the parameter
 """
@@ -152,13 +152,25 @@ class grid:
 
         return neighbor_coordiantes
 
+    def get_connections_all(self):
+        """Returns all possible pairs of cells that are neighbors (as tuple pairs)"""
+        cells = []
+        for x in range(self.columns):
+            for y in range(self.rows):
+                if x < self.columns - 1:
+                    cells.append(((x, y), (x + 1, y)))
+                if y < self.rows - 1:
+                    cells.append(((x, y), (x, y + 1)))
+        return cells
+
 #
 if __name__ == '__main__':
-    grid = grid(3,5,30)
+    grid = grid(3,3,30)
     grid.build_grid()
-    print(grid.get_neighbors(1,2))
-
-    # print(grid.get_cell_boundaries_all())
+    print(grid.get_neighbors(0,0))
+    print(grid.get_cell_boundaries_single(1,1))
+    print(grid.get_cell_boundaries_single(1,1))
+    print(grid.get_connections_all())
 #     #Run functions
 #     screen_setup()
 #     vertical_lines()

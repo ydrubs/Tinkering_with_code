@@ -45,7 +45,7 @@ def make_passage(array, direction, row, col):
     # current_cell = '#'
     # walls_and_passages[row][col] = current_cell
     dir = ((row-1), (row+1), (col+1), (col-1)) #top, bottom, right, left
-    current_cell = walls_and_passages[row][col]
+    # current_cell = walls_and_passages[row][col]
 
     if direction == 'up':
     #Remove top wall
@@ -94,8 +94,8 @@ if __name__ == '__main__':
     # make_passage(maze_data, 'down', 0,0) #Expect 5,2
     # make_passage(maze_data, 'right', 0,0) #Expect 4,3
 
-    for i in maze_data:
-        print(i)
+    # for i in maze_data:
+        # print(i)
     # maze_data[1][1] = 2
-    print(get_accessible_neighbors(maze_data,4,2))
+    # print(get_accessible_neighbors(maze_data,4,2))
 

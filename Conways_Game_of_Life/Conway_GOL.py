@@ -5,7 +5,7 @@ import Conway_GOL_patterns
 from Grid_Building import grid_template
 import turtle as t
 
-new_grid = grid_template.grid(100,100,5, hide_grid=False)
+new_grid = grid_template.grid(50,50,10, hide_grid=False)
 # new_grid.line_thickness_vert = 5
 # new_grid.line_thickness_hor = 2
 new_grid.build_grid()
