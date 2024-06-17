@@ -5,7 +5,6 @@ from collections import deque
 from Grid_Building import grid_template
 from maze_generator import Generate
 
-
 class Solve:
     def __init__(self,maze_obj):
         self.maze = maze_obj
@@ -148,6 +147,7 @@ class Solve:
                     # print(trace_row, trace_col)
                     t.down()
                     t.goto(self.grid.grid_data_centers()[trace_row][trace_col][0], self.grid.grid_data_centers()[trace_row][trace_col][1])
+                    # time.sleep(0.5)
                     t.update()
                 return None
 
@@ -156,16 +156,16 @@ class Solve:
         # return None
 
 if __name__ == '__main__':
-    grid = grid_template.grid(60, 30, cell_dim=17, border=40) #Create grid objrct
+    grid = grid_template.grid(60, 40, cell_dim=15, border=40, bg_color='cyan', hide_grid=False) #Create grid objrct
     grid.build_grid()
 
     maze_generator =  Generate(grid) # Create object for maze generation
-    maze_generator.generate_maze_DFS(0,0)
-    # maze_generator.generate_maze_kruskals()
-    print(maze_generator.walls_and_passages)
+    # maze_generator.generate_maze_DFS(0,0) #Use DFS to generate a maze passing in the starting location
+    maze_generator.generate_maze_kruskals() #Use Kruskals to generate a maze
+    # print(maze_generator.walls_and_passages)
 
     solve = Solve(maze_generator) #Create object for maze solving (pass in the maze generator as parameters, the grid object is already part of the maze_generator object)
-    solve.solve_DFS()
-    solve.solve_BFS()
+    solve.solve_DFS() #Solve using DFS
+    solve.solve_BFS() #Solve Using BFS
 
     t.done()
