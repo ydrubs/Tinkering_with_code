@@ -5,7 +5,7 @@ import Conway_GOL_patterns
 from Grid_Building import grid_template
 import turtle as t
 
-new_grid = grid_template.grid(50,50,10, hide_grid=False)
+new_grid = grid_template.grid(50,50,10, hide_grid=False, line_color='black')
 # new_grid.line_thickness_vert = 5
 # new_grid.line_thickness_hor = 2
 new_grid.build_grid()
@@ -26,15 +26,15 @@ def random_shade():
     next_step_array = [[random.randint(0,1) for i in range(new_grid.columns)] for j in range(new_grid.rows)]
     next_step_shade()
 
-def apply_pattern(row = 5, column=5):
+def apply_pattern(row = 5, column=5, color = 'purple'):
     # injection_array = Conway_GOL_patterns.glider()
     # injection_array = Conway_GOL_patterns.penta()
     # injection_array = Conway_GOL_patterns.diehard()
     # injection_array = Conway_GOL_patterns.heavy_sapceship()
     # injection_array = Conway_GOL_patterns.minimal()
     # injection_array = Conway_GOL_patterns.beautiful()
-    # injection_array = Conway_GOL_patterns.three_by_three()
-    injection_array = Conway_GOL_patterns.beautiful2()
+    injection_array = Conway_GOL_patterns.three_by_three()
+    # injection_array = Conway_GOL_patterns.beautiful2()
     # injection_array = Conway_GOL_patterns.inf_loop()
 
     # Define the starting row and column where you want to inject the array
@@ -47,7 +47,7 @@ def apply_pattern(row = 5, column=5):
         for j in range(len(injection_array[0])):
             next_step_array[start_row + i][start_col + j] = injection_array[i][j]
 
-    next_step_shade()
+    next_step_shade(color)
 
 def make_live(row, column):
     """Turn a dead cell to a live cell in the array of cells"""
@@ -110,7 +110,7 @@ def shade_cell_click(x,y):
                 t.end_fill()
                 make_live(j[1][0]-1,j[1][1]-1)
 
-def next_step_state():
+def next_step_state(color = 'purple'):
     """
     Starting point for computing and displaying iterations.
     1) Loop through each cell in the grid
@@ -142,7 +142,7 @@ def next_step_state():
             # print(live_neighbors, '**')
 
             next_step_rules(i, j, current_cell_state, live_neighbors)
-    next_step_shade()
+    next_step_shade(color)
 
 
 def next_step_rules(row, column, state, neighbors):
@@ -164,9 +164,9 @@ def next_step_rules(row, column, state, neighbors):
           next_step_array[row][column] = 0
     # print('!!!!', next_step_array, row, column)
 
-def next_step_shade():
+def next_step_shade(color):
     #Start by making a deep copy of the states of the current iteration in order to use for next iteration
-    t.color('purple')
+    t.color(color)
     new_grid.grid_array_data = copy.deepcopy(next_step_array)
     cell_border = 0
     for x, row in enumerate (next_step_array):
@@ -190,7 +190,12 @@ def next_step_shade():
 t.listen()
 t.onscreenclick(shade_cell_click)
 t.onkeypress(next_step_state, 'space')
-random_shade()
+
+apply_pattern() #Apply a predefined pattern (defined in the method)
+
+# random_shade() # Randomly initial orientation
+
+#Define number of generations to run-through
 for i in range(1000):
     next_step_state()
     # time.sleep(0.1)
